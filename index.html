@@ -855,14 +855,15 @@ const KEY = 'studyCourt.state.v1';
 const IMG_KEY = 'studyCourt.images.v1';
 
 const DAYS = [
-  { key:'mon', short:'Mon', long:'Monday',    icon:'ball' },
-  { key:'tue', short:'Tue', long:'Tuesday',   icon:'shoe' },
-  { key:'wed', short:'Wed', long:'Wednesday', icon:'whistle' },
-  { key:'thu', short:'Thu', long:'Thursday',  icon:'net' },
-  { key:'fri', short:'Fri', long:'Friday',    icon:'trophy' },
+  { key:'sun', short:'Sun', long:'Sunday',    icon:'ball' },
+  { key:'mon', short:'Mon', long:'Monday',    icon:'shoe' },
+  { key:'tue', short:'Tue', long:'Tuesday',   icon:'whistle' },
+  { key:'wed', short:'Wed', long:'Wednesday', icon:'net' },
+  { key:'thu', short:'Thu', long:'Thursday',  icon:'trophy' },
+  { key:'fri', short:'Fri', long:'Friday',    icon:'moon' },
   { key:'sat', short:'Sat', long:'Saturday',  icon:'bolt' },
-  { key:'sun', short:'Sun', long:'Sunday',    icon:'moon' },
 ];
+const JS_DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];   // Date.getDay() order
 const THEMES = {
   karasuno: { name:'Karasuno',    note:'Orange and black', sw:['#1E2229','#F37021'], meta:'#F8F6F0' },
   nekoma:   { name:'Nekoma',      note:'Red and white',    sw:['#C8102E','#FFFFFF'], meta:'#FBF7F6' },
@@ -894,12 +895,12 @@ const pad = n => String(n).padStart(2, '0');
 const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const isTouch = () => matchMedia('(pointer:coarse)').matches;
-const todayKey = () => DAYS[(new Date().getDay() + 6) % 7].key;
+const todayKey = () => JS_DAY_KEYS[new Date().getDay()];
 const dayOf = key => DAYS.find(d => d.key === key);
 
-function weekStart(d = new Date()) {
+function weekStart(d = new Date()) {          // weeks run Sunday → Saturday
   const x = new Date(d); x.setHours(0, 0, 0, 0);
-  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  x.setDate(x.getDate() - x.getDay());
   return x;
 }
 function dateForDay(key) {
@@ -1085,7 +1086,7 @@ function baseState() {
     tasks: Object.fromEntries(DAYS.map(d => [d.key, []])),
     exams: [], note: '', noteFlipped: false, activeDates: [],
     timer: { mode: 'focus', running: false, endsAt: 0, remaining: 25 * 60, focusMin: 25, breakMin: 5 },
-    sessions: { date: ymd(now), count: 0 }, focusTaskId: null,
+    sessions: { date: ymd(now), count: 0 }, focusTaskId: null, lastOpened: ymd(now),
   };
 }
 function sampleState() {
@@ -2009,6 +2010,7 @@ function renderAll() {
   renderStickers(); renderNote(); renderExams(); renderTimer(); renderSessions();
   setView(state.view);
 }
+if (state.lastOpened !== ymd(new Date())) { state.selectedDay = todayKey(); state.lastOpened = ymd(new Date()); }
 if (T().running && remainingSec() <= 0) completeTimer();
 renderAll();
 saveNow();
@@ -2018,7 +2020,12 @@ let lastDay = ymd(new Date());
 setInterval(() => {
   renderExams();
   const d = ymd(new Date());
-  if (d !== lastDay) { lastDay = d; renderNav(); renderDays(); renderTasks(); renderHeroProgress(); if (state.view === 'weekly') renderWeekly(); }
+  if (d !== lastDay) {
+    lastDay = d; state.lastOpened = d; state.selectedDay = todayKey(); save();
+    renderNav(); renderDays(); renderTasks(); renderHeroProgress();
+    if (state.view === 'weekly') renderWeekly();
+    if (state.view === 'focus') renderFocusSide();
+  }
 }, 30000);
 })();
 </script>
