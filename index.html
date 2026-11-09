@@ -71,6 +71,61 @@
   --sel-bg:#16302F; --sel-ink:#FFF9EA;
 }
 
+[data-theme="inarizaki"]{
+  --page:#E7E1E2; --bg:#F7F4F3; --surface:#FFFFFF; --surface-2:#F4EFEF; --line:#ECE4E4;
+  --ink:#1A1517; --ink-2:#5A5054; --ink-3:#8E8488;
+  --accent:#8E1B3A; --accent-ink:#7A1631; --accent-soft:#F6DDE3; --btn-bg:#8E1B3A; --on-accent:#FFFFFF;
+  --accent-2:#C2B2A9; --accent-2-ink:#6E5F57; --accent-2-soft:#EEE7E2;
+  --shade-1:#F5DCE2; --shade-2:#F8E8EA; --shade-3:#F4EFED; --shade-4:#EDE8E5; --shade-5:#E5DEDA;
+  --dot:rgba(142,27,58,.13); --ring:rgba(142,27,58,.42);
+  --hero-from:#111014; --hero-to:#3E0F20; --hero-glow:rgba(194,36,79,.5); --hero-lines:rgba(255,255,255,.065); --hero-dots:rgba(255,255,255,.16);
+  --hero-ink:#FFFFFF; --hero-ink-2:rgba(255,255,255,.76); --hero-bar:linear-gradient(90deg,#C2B2A9,#D6345E);
+  --jersey-bg:#1A1517; --jersey-num:#FFFFFF;
+  --ball-white:#FFFDFB; --ball-line:#1A1517; --ball-a:#8E1B3A; --ball-b:#1A1517;
+  --sel-bg:#1A1517; --sel-ink:#FFFFFF;
+}
+[data-theme="inarizaki"] .jersey{box-shadow:inset 0 -5px 0 var(--accent),inset 0 0 0 1px rgba(255,255,255,.08)}
+
+/* shared helpers that dark mode overrides */
+:root{--box-ring:rgba(30,34,41,.22); --track:rgba(30,34,41,.1); --plan:rgba(30,34,41,.1); --title-focus:rgba(255,255,255,.65)}
+
+/* ---------- Dark mode (works with every team theme) ---------- */
+[data-theme][data-scheme="dark"]{
+  --page:#0D0E11; --bg:#16171B; --surface:#1F2126; --surface-2:#272A30; --line:#32353C;
+  --ink:#F2EFE9; --ink-2:#BDB9B2; --ink-3:#8C8983;
+  --accent-ink:color-mix(in srgb,var(--accent) 58%,#FFFFFF);
+  --accent-soft:color-mix(in srgb,var(--accent) 22%,#1F2126);
+  --shade-1:color-mix(in srgb,var(--accent) 24%,#1F2126);
+  --shade-2:color-mix(in srgb,var(--accent) 15%,#1F2126);
+  --shade-3:color-mix(in srgb,var(--accent) 7%,#23252A);
+  --shade-4:color-mix(in srgb,var(--accent-2) 14%,#1F2126);
+  --shade-5:color-mix(in srgb,var(--accent-2) 22%,#1F2126);
+  --dot:rgba(255,255,255,.045);
+  --sel-bg:#F2EFE9; --sel-ink:#16171B;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 28px -14px rgba(0,0,0,.7);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.4),0 20px 36px -16px rgba(0,0,0,.8);
+  --urgent-bg:#3B1D1C; --urgent-ink:#FF9D93;
+  --soon-bg:#3A2918;   --soon-ink:#FFB877;
+  --week-bg:#363015;   --week-ink:#F0D36C;
+  --calm-bg:#17332A;   --calm-ink:#80D8A7;
+  --past-bg:#2A2C31;   --past-ink:#9A9DA3;
+  --box-ring:rgba(255,255,255,.28); --track:rgba(255,255,255,.12); --plan:rgba(255,255,255,.13); --title-focus:rgba(255,255,255,.08);
+  color-scheme:dark;
+}
+[data-scheme="dark"] .shell{box-shadow:0 0 0 1px rgba(255,255,255,.04),0 40px 80px -44px rgba(0,0,0,.8)}
+[data-scheme="dark"] .hero-bg{box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+[data-theme][data-scheme="dark"] .day-tile.is-selected .dt-icon{color:var(--accent)}
+[data-theme][data-scheme="dark"] .day-tile.is-selected .dt-bar{background:rgba(0,0,0,.15)}
+[data-theme][data-scheme="dark"] .day-tile.is-selected .dt-bar i{background:var(--accent)}
+[data-theme][data-scheme="dark"] .day-tile.is-selected{background:radial-gradient(circle at 1.5px 1.5px,rgba(0,0,0,.06) 1.3px,transparent 1.6px) 0 0/11px 11px,var(--sel-bg)}
+[data-theme][data-scheme="dark"] .face.back{background:linear-gradient(transparent 0 31px,rgba(255,255,255,.06) 31px 32px) 0 6px/100% 32px,#26241C}
+[data-scheme="dark"] .art-note{background:rgba(31,33,38,.95)}
+[data-scheme="dark"] .toast button{background:rgba(0,0,0,.08);color:var(--accent-ink)}
+[data-theme="karasuno"][data-scheme="dark"] .toast button,[data-theme="nekoma"][data-scheme="dark"] .toast button{color:#B4500F}
+[data-scheme="dark"] .badge-btn:not(.accent),[data-scheme="dark"] .art-edit{color:var(--ink)}
+[data-scheme="dark"] .art-edit{background:rgba(31,33,38,.9)}
+[data-scheme="dark"] select option{background:#1F2126;color:#F2EFE9}
+
 /* =========================================================
    BASE
    ========================================================= */
@@ -104,6 +159,19 @@ h1,h2,h3,p{margin:0}
 .icon-btn.sm{width:36px;height:36px;box-shadow:none}
 .icon-btn:active{transform:scale(.93)}
 @media (hover:hover){.icon-btn:hover{transform:translateY(-1px)}}
+.sync-dot{position:absolute;right:-3px;bottom:-3px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg);background:#9AA0A6}
+.sync-dot[data-state="ok"]{background:#2E9E63}
+.sync-dot[data-state="busy"]{background:#E3A008;animation:blink 1.2s ease-in-out infinite}
+.sync-dot[data-state="err"]{background:#D93025}
+#themeBtn{position:relative}
+.acct{display:flex;flex-direction:column;gap:14px;padding:20px 22px 22px}
+.acct p{font-size:14px;color:var(--ink-2);line-height:1.5}
+.acct .who{padding:12px 14px;border-radius:14px;background:var(--surface-2);font-weight:700;word-break:break-all}
+.acct .who small{display:block;font-weight:600;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.acct-err{font-size:13.5px;font-weight:600;color:var(--urgent-ink);background:var(--urgent-bg);padding:10px 12px;border-radius:12px}
+.acct-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.acct .link-btn{align-self:flex-start;margin:0;padding:0}
+.btn-primary[aria-busy="true"]{opacity:.7;pointer-events:none}
 .theme-dot{width:20px;height:20px;border-radius:50%;background:conic-gradient(var(--accent) 0 50%,var(--sel-bg) 50% 100%);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--line)}
 
 .tabs{position:relative;display:flex;gap:2px}
@@ -137,6 +205,10 @@ h1,h2,h3,p{margin:0}
 .mi-check{opacity:0;color:var(--accent-ink)}
 .menu-item[aria-checked="true"] .mi-check{opacity:1}
 .menu-sep{height:1px;background:var(--line);margin:6px 4px}
+.switch{position:relative;flex:none;width:40px;height:24px;border-radius:999px;background:var(--track);transition:background-color .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s var(--ease)}
+[aria-checked="true"] > .switch{background:var(--accent)}
+[aria-checked="true"] > .switch::after{transform:translateX(16px)}
 
 /* =========================================================
    HERO
@@ -207,7 +279,7 @@ main{margin-top:22px}
 .dt-bottom{display:flex;align-items:baseline;justify-content:space-between;gap:4px}
 .dt-name{font-weight:800;font-size:16px;letter-spacing:-.01em}
 .dt-count{font-size:12px;font-weight:700;opacity:.62}
-.dt-bar{position:absolute;left:11px;right:11px;bottom:6px;height:3px;border-radius:3px;background:rgba(30,34,41,.1);overflow:hidden}
+.dt-bar{position:absolute;left:11px;right:11px;bottom:6px;height:3px;border-radius:3px;background:var(--track);overflow:hidden}
 .dt-bar i{display:block;height:100%;background:var(--accent);border-radius:inherit;transition:width .5s var(--ease)}
 .day-tile.is-selected{background:radial-gradient(circle at 1.5px 1.5px,rgba(255,255,255,.08) 1.3px,transparent 1.6px) 0 0/11px 11px,var(--sel-bg);color:var(--sel-ink);box-shadow:var(--shadow-lift)}
 .day-tile.is-selected .dt-icon{color:var(--accent)}
@@ -272,7 +344,7 @@ main{margin-top:22px}
 .task.enter{animation:pill-in .35s var(--ease)}
 .task.leaving{opacity:0;transform:translateX(16px) scale(.97)}
 .check{width:var(--tap);height:var(--tap);flex:none;display:grid;place-items:center;border-radius:50%}
-.box{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:inset 0 0 0 2px rgba(30,34,41,.22);color:transparent;transition:background-color .2s,box-shadow .2s,transform .2s var(--ease)}
+.box{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:inset 0 0 0 2px var(--box-ring);color:transparent;transition:background-color .2s,box-shadow .2s,transform .2s var(--ease)}
 .box svg{width:15px;height:15px;transform:scale(.4);transition:transform .25s var(--ease)}
 @media (hover:hover){.check:hover .box{box-shadow:inset 0 0 0 2px var(--accent)}}
 [aria-checked="true"] > .box{background:var(--ink);box-shadow:none;color:var(--bg)}
@@ -280,7 +352,7 @@ main{margin-top:22px}
 .check.pop .box{animation:pop-check .35s var(--ease)}
 .task-main{flex:1;min-width:0;display:flex;align-items:center;gap:6px}
 .task-title{display:block;flex:1;min-width:0;min-height:36px;padding:8px 6px;border:0;border-radius:10px;background:transparent;font-size:15px;font-weight:600;line-height:1.35;resize:none;overflow:hidden;transition:background-color .2s}
-.task-title:focus{background:rgba(255,255,255,.65)}
+.task-title:focus{background:var(--title-focus)}
 .task.done .task-title{text-decoration:line-through;text-decoration-thickness:2px;color:var(--ink-3)}
 .task-time{width:64px;flex:none;height:30px;border:0;border-radius:999px;background:var(--surface);text-align:center;font-weight:800;font-size:13px;color:var(--ink);box-shadow:0 1px 2px rgba(30,34,41,.06)}
 .task.done .task-time{color:var(--ink-3)}
@@ -366,6 +438,31 @@ main{margin-top:22px}
 .stat-lbl{font-size:13px;font-weight:600;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .stat-next .stat-num{color:var(--accent-ink)}
 .week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;align-items:start}
+.chart-card{margin-bottom:18px}
+.chart-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;margin-bottom:10px}
+.chart-head h2{font-size:16.5px;font-weight:800}
+.chart-sub{font-size:13px;font-weight:600;color:var(--ink-3)}
+.legend{display:flex;gap:16px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px}
+.lg-plan{background:var(--plan)}
+.lg-done{background:var(--accent)}
+.chart{display:grid;grid-template-columns:38px minmax(0,1fr);grid-template-rows:190px auto}
+.y-axis{position:relative}
+.y-lbl{position:absolute;right:8px;font-size:11.5px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums;line-height:14px}
+.plot{position:relative}
+.plot-inner{position:absolute;inset:22px 0 0 0;display:flex;border-bottom:1.5px solid var(--line)}
+.gl{position:absolute;left:0;right:0;height:0;border-top:1px dashed var(--line);pointer-events:none}
+.bar-col{position:relative;flex:1;height:100%;border-radius:10px 10px 0 0;transition:background-color .15s}
+.bar-col:hover,.bar-col:focus-visible{background:var(--surface-2)}
+.bar-track{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(38px,58%);background:var(--plan);border-radius:4px 4px 0 0;display:flex;align-items:flex-end;overflow:hidden;transition:height .6s var(--ease)}
+.bar-done{width:100%;background:var(--accent);border-radius:4px 4px 0 0;box-shadow:0 -2px 0 var(--surface);transition:height .6s var(--ease)}
+.bar-val{position:absolute;left:0;right:0;text-align:center;font-size:11.5px;font-weight:700;color:var(--ink-2);white-space:nowrap;pointer-events:none}
+.x-axis{grid-column:2;display:flex;padding-top:8px}
+.x-axis span{flex:1;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.x-axis span.is-today{color:var(--accent-ink)}
+.chart-tip{position:absolute;z-index:5;top:0;transform:translate(-50%,-100%);padding:8px 10px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:12.5px;font-weight:600;line-height:1.35;white-space:nowrap;pointer-events:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.chart-tip b{display:block;font-weight:800}
 .wk-day{display:flex;flex-direction:column;padding:12px;border-radius:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);min-width:0}
 .wk-day.is-today{box-shadow:0 0 0 2px var(--accent),var(--shadow)}
 .wk-head{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;padding:8px;margin:-4px -4px 6px;border-radius:14px;background:radial-gradient(circle at 1.5px 1.5px,var(--dot) 1.3px,transparent 1.6px) 0 0/11px 11px,var(--tile)}
@@ -374,7 +471,7 @@ main{margin-top:22px}
 .wk-name{font-weight:800;font-size:15px}
 .wk-date{font-size:12.5px;font-weight:600;color:var(--ink-2)}
 .wk-date em{font-style:normal;color:var(--accent-ink);font-weight:800}
-.wk-meter{height:5px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:4px 2px 8px}
+.wk-meter{height:5px;border-radius:999px;background:var(--track);overflow:hidden;margin:4px 2px 8px}
 .wk-meter i{display:block;height:100%;background:var(--accent);border-radius:inherit}
 .wk-meta{display:flex;justify-content:space-between;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink-2);padding:0 2px 6px}
 .wk-meta b{color:var(--ink)}
@@ -598,7 +695,7 @@ dialog.sheet::backdrop{background:rgba(20,22,27,.42);-webkit-backdrop-filter:blu
   <header class="nav">
     <div class="nav-left">
       <div class="menu-wrap">
-        <button class="icon-btn" id="themeBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="themeMenu" aria-label="Profile and theme"><span class="theme-dot"></span></button>
+        <button class="icon-btn" id="themeBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="themeMenu" aria-label="Profile, theme and sync"><span class="theme-dot"></span><span class="sync-dot" id="syncDot" hidden></span></button>
         <div class="popover" id="themeMenu" role="menu" hidden></div>
       </div>
       <button class="icon-btn dark" id="quickAddBtn" aria-label="Add a task"></button>
@@ -737,6 +834,13 @@ dialog.sheet::backdrop{background:rgba(20,22,27,.42);-webkit-backdrop-filter:blu
     <!-- ================= WEEKLY VIEW ================= -->
     <section class="view" id="view-weekly" role="tabpanel" aria-labelledby="tab-weekly" hidden>
       <div class="week-stats" id="weekStats"></div>
+      <article class="card chart-card">
+        <div class="chart-head">
+          <div><h2>Study hours this week</h2><p class="chart-sub" id="chartSub"></p></div>
+          <div class="legend" aria-hidden="true"><span><i class="lg-plan"></i>Planned</span><span><i class="lg-done"></i>Completed</span></div>
+        </div>
+        <div class="chart" id="weekChart"></div>
+      </article>
       <div class="week-grid" id="weekGrid"></div>
     </section>
 
@@ -841,6 +945,8 @@ dialog.sheet::backdrop{background:rgba(20,22,27,.42);-webkit-backdrop-filter:blu
   </form>
 </dialog>
 
+<dialog class="sheet" id="accountDialog" aria-labelledby="acctTitle"><div id="acctBody"></div></dialog>
+
 <input type="file" id="restoreInput" accept="application/json,.json" hidden>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
@@ -868,6 +974,7 @@ const THEMES = {
   karasuno: { name:'Karasuno',    note:'Orange and black', sw:['#1E2229','#F37021'], meta:'#F8F6F0' },
   nekoma:   { name:'Nekoma',      note:'Red and white',    sw:['#C8102E','#FFFFFF'], meta:'#FBF7F6' },
   seijoh:   { name:'Aoba Johsai', note:'Teal and cream',   sw:['#2E9C99','#F3E7C4'], meta:'#F7F3E8' },
+  inarizaki:{ name:'Inarizaki',   note:'Black and maroon', sw:['#1A1517','#8E1B3A'], meta:'#F7F4F3' },
 };
 const DEFAULT_TITLE = 'Welcome to My Study Court';
 const QUOTES = [
@@ -970,6 +1077,8 @@ const I = {
   grid:   sv('<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>'),
   download: sv('<path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/>'),
   upload: sv('<path d="M12 16V5M7 10l5-5 5 5"/><path d="M5 20h14"/>'),
+  moon:   sv('<path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/>'),
+  cloud:  sv('<path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.75 4.75 0 0 0 7 18.5z"/>'),
   user:   sv('<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-3.6 4.1-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>'),
   ball:   sv('<circle cx="12" cy="12" r="9"/><path d="M12 3c2.4 2.4 3.4 5.6 2.6 9"/><path d="M3.4 9.6c3.4-1.2 7.6-.6 11.2 2.4"/><path d="M14.6 12c-1 3.6-3.6 6.4-7.6 7.6"/><path d="M20.6 14.7c-3.3 1-6.3.4-8.6-1.5"/>', { sw: 1.8 }),
 };
@@ -1087,6 +1196,7 @@ function baseState() {
     exams: [], note: '', noteFlipped: false, activeDates: [],
     timer: { mode: 'focus', running: false, endsAt: 0, remaining: 25 * 60, focusMin: 25, breakMin: 5 },
     sessions: { date: ymd(now), count: 0 }, focusTaskId: null, lastOpened: ymd(now),
+    weekOf: ymd(weekStart(now)), dark: matchMedia('(prefers-color-scheme: dark)').matches,
   };
 }
 function sampleState() {
@@ -1124,6 +1234,7 @@ function normalize(raw) {
     id: String(e.id || uid()), title: String(e.title || 'Exam'), course: String(e.course || ''), type: String(e.type || 'Quiz'), when: String(e.when),
   })) : [];
   s.timer = Object.assign(baseState().timer, raw?.timer || {});
+  if (!['focus', 'break'].includes(s.timer.mode)) { s.timer.mode = 'focus'; s.timer.running = false; s.timer.remaining = (+s.timer.focusMin || 25) * 60; }
   s.timer.focusMin = clamp(+s.timer.focusMin || 25, 1, 120);
   s.timer.breakMin = clamp(+s.timer.breakMin || 5, 1, 60);
   if (!THEMES[s.theme]) s.theme = 'karasuno';
@@ -1142,11 +1253,12 @@ function load() {
 let state = load();
 let images = (() => { try { return Object.assign({ hero: '', s1: '', s2: '' }, JSON.parse(localStorage.getItem(IMG_KEY) || '{}')); } catch { return { hero: '', s1: '', s2: '' }; } })();
 
-let saveTimer = null, storageWarned = false;
+let saveTimer = null, storageWarned = false, applyingRemote = false;
 function saveNow() {
   clearTimeout(saveTimer); saveTimer = null;
   try { localStorage.setItem(KEY, JSON.stringify(state)); }
   catch (e) { if (!storageWarned) { storageWarned = true; toast('Changes could not be saved. Browser storage is full or blocked (private browsing?).'); } }
+  if (!applyingRemote) { try { window.__scSync?.localChanged(); } catch (e) { console.warn(e); } }
 }
 function save() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 200); }
 function saveImages() {
@@ -1224,8 +1336,23 @@ function fmtWhen(when) {
    RENDER: NAV, THEME, HERO
    ========================================================= */
 function applyTheme() {
-  document.documentElement.dataset.theme = state.theme;
-  $('meta[name="theme-color"]').setAttribute('content', THEMES[state.theme].meta);
+  const root = document.documentElement;
+  root.dataset.theme = state.theme;
+  root.dataset.scheme = state.dark ? 'dark' : 'light';
+  $('meta[name="theme-color"]').setAttribute('content', state.dark ? '#16171B' : THEMES[state.theme].meta);
+  $('meta[name="color-scheme"]').setAttribute('content', state.dark ? 'dark' : 'light');
+}
+/* New week (Sunday): clear last week's completed tasks, keep unfinished ones */
+function checkNewWeek() {
+  const wk = ymd(weekStart());
+  if (state.weekOf === wk) return;
+  const snapshot = JSON.parse(JSON.stringify(state.tasks));
+  let n = 0;
+  DAYS.forEach(d => { const b = state.tasks[d.key].length; state.tasks[d.key] = state.tasks[d.key].filter(t => !t.done); n += b - state.tasks[d.key].length; });
+  state.weekOf = wk; saveNow();
+  if (n) setTimeout(() => toast(`New week! Cleared ${n} completed ${n === 1 ? 'task' : 'tasks'} from last week. Unfinished tasks are still here.`, {
+    action: 'Undo', ms: 9000, onAction() { state.tasks = snapshot; save(); renderTasks(); refreshDerived(); },
+  }), 700);
 }
 function renderNav() {
   const now = new Date(), n = streak();
@@ -1239,6 +1366,9 @@ function renderThemeMenu() {
       <span class="mi-text"><b>${t.name}</b><small>${t.note}</small></span>
       <span class="mi-check">${I.check}</span>
     </button>`).join('') + `<div class="menu-sep"></div>
+    <button class="menu-item" role="menuitemcheckbox" aria-checked="${!!state.dark}" data-menu="dark">${I.moon}<span class="mi-text"><b>Dark mode</b></span><span class="switch" aria-hidden="true"></span></button>
+    <div class="menu-sep"></div>
+    <button class="menu-item" role="menuitem" data-menu="account">${I.cloud}<span class="mi-text"><b>${esc(window.__scSync?.label() || 'Sign in to sync')}</b><small>${esc(window.__scSync?.status() || 'Connecting…')}</small></span></button>
     <button class="menu-item" role="menuitem" data-menu="profile">${I.user}<span>Edit banner and profile</span></button>
     <button class="menu-item" role="menuitem" data-menu="backup">${I.download}<span>Save backup</span></button>
     <button class="menu-item" role="menuitem" data-menu="restore">${I.upload}<span>Restore backup</span></button>`;
@@ -1387,6 +1517,7 @@ function renderWeekly() {
     <div class="stat stat-next">${next
       ? `<span class="stat-num">${esc(countdown(next.when).label)}</span><span class="stat-lbl" title="${esc(next.title)}">Next: ${esc(next.title)}</span>`
       : `<span class="stat-num">All clear</span><span class="stat-lbl">No exams coming up</span>`}</div>`;
+  renderChart();
   const tk = todayKey();
   $('#weekGrid').innerHTML = DAYS.map((d, i) => {
     const s = dayStats(d.key), list = state.tasks[d.key], pct = s.n ? Math.round(s.nd / s.n * 100) : 0;
@@ -1399,11 +1530,59 @@ function renderWeekly() {
       <div class="wk-meter"><i style="width:${pct}%"></i></div>
       <p class="wk-meta">${s.n ? `<span><b>${s.nd}/${s.n}</b> done</span><span>${fmtLong(s.total)}</span>` : '<span>No tasks</span>'}</p>
       ${list.length ? `<ul class="wk-list">${list.slice(0, 5).map(t => `
-        <li class="${t.done ? 'done' : ''}"><button type="button" class="mini-check" role="checkbox" aria-checked="${t.done}" data-day="${d.key}" data-id="${t.id}" aria-label="Done: ${esc(t.title)}"><span class="box">${I.check}</span></button><span class="wk-task">${esc(t.title)}</span></li>`).join('')}</ul>` : `<p class="wk-empty">Rest day. Nothing planned yet.</p>`}
+        <li class="${t.done ? 'done' : ''}"><button type="button" class="mini-check" role="checkbox" aria-checked="${t.done}" data-day="${d.key}" data-id="${t.id}" aria-label="Done: ${esc(t.title)}"><span class="box">${I.check}</span></button><span class="wk-task">${esc(t.title)}</span></li>`).join('')}</ul>` : `<p class="wk-empty">Nothing planned yet.</p>`}
       ${list.length > 5 ? `<p class="wk-more">+${list.length - 5} more</p>` : ''}
       <button type="button" class="wk-open" data-open-day="${d.key}">${list.length ? 'Open' : 'Plan'} ${d.short}</button>
     </article>`;
   }).join('');
+}
+
+/* Weekly chart: one bar per day, planned time as the track, completed time filled in */
+const compactTime = m => m < 60 ? `${m}m` : `${+(m / 60).toFixed(1)}h`;
+function renderChart() {
+  const tk = todayKey(), PLOT = 168;
+  const data = DAYS.map(d => ({ d, ...dayStats(d.key) }));
+  const maxMin = Math.max(60, ...data.map(x => x.total));
+  const stepH = maxMin <= 240 ? 1 : maxMin <= 480 ? 2 : 4;
+  const top = Math.ceil(maxMin / 60 / stepH) * stepH * 60;
+  const ticks = []; for (let m = 0; m <= top; m += stepH * 60) ticks.push(m);
+  const T = data.reduce((a, x) => a + x.total, 0), D = data.reduce((a, x) => a + x.done, 0);
+  $('#chartSub').textContent = T ? `${fmtLong(D)} of ${fmtLong(T)} done, ${Math.round(D / T * 100)}%` : 'Add tasks with time estimates to see your week';
+  const el = $('#weekChart');
+  el.setAttribute('role', 'group');
+  el.setAttribute('aria-label', 'Study hours per day: ' + data.map(x => `${x.d.long} ${fmtLong(x.done)} of ${fmtLong(x.total)}`).join('; '));
+  el.innerHTML = `
+    <div class="y-axis" aria-hidden="true">${ticks.map(m => `<span class="y-lbl" style="bottom:${(m / top * PLOT - 7).toFixed(1)}px">${m / 60}h</span>`).join('')}</div>
+    <div class="plot">
+      <div class="plot-inner">
+        ${ticks.slice(1).map(m => `<span class="gl" style="bottom:${(m / top * 100).toFixed(2)}%"></span>`).join('')}
+        ${data.map(x => {
+          const h = x.total / top * 100, dh = x.total ? x.done / x.total * 100 : 0;
+          return `<button type="button" class="bar-col" data-open-day="${x.d.key}" data-tip="${x.d.long}|${x.total ? `${fmtLong(x.done)} of ${fmtLong(x.total)} done` : 'No tasks planned'}" aria-label="${x.d.long}: ${fmtLong(x.done)} of ${fmtLong(x.total)} completed. Open day.">
+            ${x.total ? `<span class="bar-track" style="height:${h.toFixed(2)}%"><span class="bar-done" style="height:${dh.toFixed(2)}%"></span></span>
+            <span class="bar-val" style="bottom:calc(${h.toFixed(2)}% + 4px)">${compactTime(x.total)}</span>` : ''}
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="chart-tip" hidden></div>
+    </div>
+    <div class="x-axis" aria-hidden="true">${data.map(x => `<span class="${x.d.key === tk ? 'is-today' : ''}">${x.d.short}</span>`).join('')}</div>`;
+  const plot = el.querySelector('.plot'), tip = el.querySelector('.chart-tip');
+  const show = col => {
+    const [day, txt] = col.dataset.tip.split('|');
+    tip.innerHTML = `<b>${esc(day)}</b>${esc(txt)}`;
+    const pr = plot.getBoundingClientRect(), cr = col.getBoundingClientRect(), tr = col.querySelector('.bar-track')?.getBoundingClientRect();
+    let x = cr.left + cr.width / 2 - pr.left;
+    tip.hidden = false;
+    const half = tip.offsetWidth / 2;
+    x = clamp(x, half, pr.width - half);
+    tip.style.left = x + 'px';
+    tip.style.top = Math.max(((tr ? tr.top : cr.bottom) - pr.top) - 22, 12) + 'px';
+  };
+  plot.addEventListener('pointerover', e => { const c = e.target.closest('.bar-col'); if (c && e.pointerType !== 'touch') show(c); });
+  plot.addEventListener('pointerleave', () => tip.hidden = true);
+  plot.addEventListener('focusin', e => { const c = e.target.closest('.bar-col'); if (c) show(c); });
+  plot.addEventListener('focusout', () => tip.hidden = true);
 }
 
 /* =========================================================
@@ -1589,6 +1768,7 @@ $('#themeBtn').addEventListener('click', e => {
   else closeMenu();
 });
 $('#themeMenu').addEventListener('click', e => {
+  e.stopPropagation();   // the clicked item is re-rendered, so keep the outside-click check from closing the menu
   const pick = e.target.closest('[data-theme-pick]');
   if (pick) {
     state.theme = pick.dataset.themePick; save(); applyTheme(); renderThemeMenu();
@@ -1597,7 +1777,16 @@ $('#themeMenu').addEventListener('click', e => {
   }
   const m = e.target.closest('[data-menu]');
   if (!m) return;
+  if (m.dataset.menu === 'dark') {
+    state.dark = !state.dark; save(); applyTheme(); renderThemeMenu();
+    $('[data-menu="dark"]')?.focus({ preventScroll: true });
+    return;
+  }
   closeMenu();
+  if (m.dataset.menu === 'account') {
+    if (window.__scSync) window.__scSync.openAccount();
+    else toast("Sync isn't available right now. Check your internet connection and reload the page.");
+  }
   if (m.dataset.menu === 'profile') openProfile();
   if (m.dataset.menu === 'backup') downloadBackup();
   if (m.dataset.menu === 'restore') $('#restoreInput').click();
@@ -1660,7 +1849,7 @@ $('#dayGrid').addEventListener('click', e => { const t = e.target.closest('[data
 $('#viewAllBtn').addEventListener('click', () => { setView('weekly'); $('main').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 
 document.addEventListener('click', e => {
-  const m = e.target.closest('[data-mode]');
+  const m = e.target.closest('button[data-mode]');
   if (m) { setMode(m.dataset.mode); return; }
   const b = e.target.closest('[data-timer]');
   if (!b) return;
@@ -2003,6 +2192,29 @@ $('#hpBall').innerHTML = smallBall();
 $('#editHint').innerHTML = `${I.edit}<span>Click the title or quote to edit them</span>`;
 
 /* =========================================================
+   BRIDGE FOR ACCOUNT SYNC (used by the Firebase module below)
+   Only planner content syncs; view, timer and pictures stay per device.
+   ========================================================= */
+const SYNC_KEYS = ['theme', 'dark', 'title', 'quote', 'quoteIdx', 'tasks', 'exams', 'note', 'activeDates', 'weekOf'];
+window.__sc = {
+  icons: I, toast, esc,
+  getSyncData() { const o = {}; SYNC_KEYS.forEach(k => { o[k] = state[k]; }); return JSON.parse(JSON.stringify(o)); },
+  applySyncData(data) {
+    applyingRemote = true;
+    try {
+      const keep = { view: state.view, selectedDay: state.selectedDay, timer: state.timer, sessions: state.sessions,
+                     lastOpened: state.lastOpened, noteFlipped: state.noteFlipped, focusTaskId: state.focusTaskId };
+      const picked = {}; SYNC_KEYS.forEach(k => { if (data && k in data) picked[k] = data[k]; });
+      state = normalize(Object.assign({}, state, picked, keep));
+      saveNow(); renderAll();
+    } finally { applyingRemote = false; }
+    checkNewWeek();
+  },
+  refreshMenu() { if (!$('#themeMenu').hidden) renderThemeMenu(); },
+  setDot(st) { const d = $('#syncDot'); d.hidden = !st; if (st) d.dataset.state = st; },
+};
+
+/* =========================================================
    INIT
    ========================================================= */
 function renderAll() {
@@ -2010,6 +2222,7 @@ function renderAll() {
   renderStickers(); renderNote(); renderExams(); renderTimer(); renderSessions();
   setView(state.view);
 }
+checkNewWeek();
 if (state.lastOpened !== ymd(new Date())) { state.selectedDay = todayKey(); state.lastOpened = ymd(new Date()); }
 if (T().running && remainingSec() <= 0) completeTimer();
 renderAll();
@@ -2021,6 +2234,7 @@ setInterval(() => {
   renderExams();
   const d = ymd(new Date());
   if (d !== lastDay) {
+    checkNewWeek();
     lastDay = d; state.lastOpened = d; state.selectedDay = todayKey(); save();
     renderNav(); renderDays(); renderTasks(); renderHeroProgress();
     if (state.view === 'weekly') renderWeekly();
@@ -2028,6 +2242,257 @@ setInterval(() => {
   }
 }, 30000);
 })();
+</script>
+
+<script type="module">
+/* =========================================================
+   ACCOUNT SYNC (Firebase Authentication + Cloud Firestore)
+   Email + password sign-in, one document per user: planners/{uid}
+   ========================================================= */
+const FB = 'https://www.gstatic.com/firebasejs/12.18.0/';
+const firebaseConfig = {
+  apiKey: "AIzaSyBGciP_cke3e0bLbiOn3qb6lcK0w8A9TKo",
+  authDomain: "study-court-26fa9.firebaseapp.com",
+  projectId: "study-court-26fa9",
+  storageBucket: "study-court-26fa9.firebasestorage.app",
+  messagingSenderId: "416045364093",
+  appId: "1:416045364093:web:19b00be61aff5832461214"
+};
+
+const sc = window.__sc;
+const { toast, esc, icons: I } = sc;
+const META_KEY = 'studyCourt.sync.v1';
+const S = { status: 'loading', user: null, ready: false, lastHash: '', lastSynced: 0, unsub: null,
+            ref: null, timer: null, uploading: null, pendingRemote: null, conflict: null, error: '' };
+const DEVICE = (() => {
+  try { let d = localStorage.getItem('studyCourt.device'); if (!d) { d = Math.random().toString(36).slice(2, 10); localStorage.setItem('studyCourt.device', d); } return d; }
+  catch { return 'dev-' + Math.random().toString(36).slice(2, 8); }
+})();
+const meta = () => { try { return JSON.parse(localStorage.getItem(META_KEY) || '{}'); } catch { return {}; } };
+const setMeta = m => { try { localStorage.setItem(META_KEY, JSON.stringify(m)); } catch {} };
+const hash = () => JSON.stringify(sc.getSyncData());
+let upload = async () => {};   // replaced once Firebase has loaded
+const ago = t => { const s = Math.round((Date.now() - t) / 1000); if (s < 45) return 'just now'; const m = Math.round(s / 60); if (m < 60) return `${m} min ago`; const h = Math.round(m / 60); return h < 24 ? `${h} h ago` : new Date(t).toLocaleDateString(); };
+
+function setStatus(st, error = '') {
+  S.status = st; S.error = error;
+  sc.setDot({ synced: 'ok', syncing: 'busy', offline: 'busy', error: 'err', unavailable: 'err' }[st] || '');
+  sc.refreshMenu();
+  if (dlg.open && view === 'account') render();
+}
+const statusText = () => ({
+  loading: 'Connecting…',
+  unavailable: "Can't reach sync right now",
+  signedout: 'Saved on this device only',
+  syncing: 'Saving to your account…',
+  synced: `Synced ${ago(S.lastSynced || Date.now())}`,
+  offline: "Offline. I'll sync when you're back online",
+  conflict: 'Choose which planner to keep',
+  error: 'Sync problem. Tap to see details',
+}[S.status] || '');
+
+window.__scSync = {
+  label: () => S.user ? 'Account and sync' : 'Sign in to sync',
+  status: statusText,
+  openAccount: () => open(S.conflict ? 'conflict' : 'account'),
+  localChanged() {
+    if (!S.user || !S.ready) return;
+    if (hash() === S.lastHash) return;
+    clearTimeout(S.timer);
+    setStatus(navigator.onLine ? 'syncing' : 'offline');
+    S.timer = setTimeout(upload, 1200);
+  },
+};
+
+/* ---------- dialog ---------- */
+const dlg = document.getElementById('accountDialog');
+const body = document.getElementById('acctBody');
+let view = 'account', busy = false, formError = '';
+function open(v) { view = v; formError = ''; render(); if (!dlg.open) dlg.showModal(); }
+dlg.addEventListener('close', () => { formError = ''; });
+const closeBtn = `<button type="button" class="icon-btn sm" data-close aria-label="Close">${I.x}</button>`;
+function render() {
+  if (S.status === 'loading' || S.status === 'unavailable') {
+    body.innerHTML = `<div class="acct"><div class="sheet-head"><h2 id="acctTitle">Sync your planner</h2>${closeBtn}</div>
+      <p>${S.status === 'loading' ? 'Connecting to the sync service…' : "Sync can't be reached right now. Check your internet connection and reload the page. Your planner is still saved on this device."}</p></div>`;
+    return;
+  }
+  if (view === 'conflict' && S.conflict) {
+    body.innerHTML = `<div class="acct"><div class="sheet-head"><h2 id="acctTitle">You already have a saved planner</h2></div>
+      <p>Your account has a planner saved from another device${S.conflict.updatedAt ? ` (last changed ${esc(new Date(S.conflict.updatedAt).toLocaleString())})` : ''}. This device has a different one. Which do you want to keep?</p>
+      <button type="button" class="btn-primary" data-act="use-cloud">Use my saved planner</button>
+      <button type="button" class="btn-soft" data-act="use-device" style="justify-content:center">Keep this device's planner instead</button>
+      <p class="hint">The one you don't pick is replaced. To be safe, you can first use Save backup in the menu.</p></div>`;
+    return;
+  }
+  if (S.user) {
+    body.innerHTML = `<div class="acct"><div class="sheet-head"><h2 id="acctTitle">Account and sync</h2>${closeBtn}</div>
+      <div class="who">${esc(S.user.email || 'Signed in')}<small>${esc(statusText())}</small></div>
+      ${S.status === 'error' && S.error ? `<p class="acct-err">${esc(S.error)}</p>` : ''}
+      <p>Sign in with this email on your iPad, phone and laptop to see the same tasks, exams and notes everywhere. Custom pictures stay on each device.</p>
+      <div class="acct-row"><button type="button" class="btn-primary" data-act="sync-now">Sync now</button><span class="spacer"></span><button type="button" class="btn-ghost danger" data-act="sign-out">Sign out</button></div></div>`;
+    return;
+  }
+  body.innerHTML = `<form class="acct" id="acctForm" novalidate>
+      <div class="sheet-head"><h2 id="acctTitle">Sync your planner</h2>${closeBtn}</div>
+      <p>Sign in on every device with the same email to see the same tasks, exams and notes. Your planner keeps working on this device without an account.</p>
+      <label class="field"><span>Email</span><input name="email" type="email" autocomplete="username" autocapitalize="off" autocorrect="off" inputmode="email" required></label>
+      <label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" minlength="6" required></label>
+      ${formError ? `<p class="acct-err" role="alert">${esc(formError)}</p>` : ''}
+      <div class="acct-row">
+        <button type="submit" class="btn-primary" data-act="sign-in">Sign in</button>
+        <button type="button" class="btn-soft" data-act="create">Create account</button>
+      </div>
+      <button type="button" class="link-btn" data-act="reset">Forgot password?</button>
+      <p class="hint">New here? Type your email and a password of at least 6 characters, then tap Create account.</p>
+    </form>`;
+}
+function fieldVals() {
+  const f = document.getElementById('acctForm');
+  return { f, email: f.elements.email.value.trim(), password: f.elements.password.value };
+}
+const MSG = {
+  'auth/invalid-credential': 'Wrong email or password.',
+  'auth/wrong-password': 'Wrong email or password.',
+  'auth/user-not-found': 'No account uses this email yet. Tap Create account.',
+  'auth/invalid-email': 'That email address looks incomplete.',
+  'auth/missing-password': 'Type your password.',
+  'auth/email-already-in-use': 'An account with this email already exists. Tap Sign in instead.',
+  'auth/weak-password': 'Use a password with at least 6 characters.',
+  'auth/too-many-requests': 'Too many tries. Wait a few minutes and try again.',
+  'auth/network-request-failed': 'No internet connection. Connect and try again.',
+  'auth/operation-not-allowed': 'Email sign-in is turned off in Firebase. Turn on Email/Password under Authentication → Sign-in method.',
+  'permission-denied': 'The database blocked the save. Check that the Firestore rules were published exactly as given.',
+};
+const errMsg = e => MSG[e?.code] || (e?.message ? `Something went wrong: ${e.message}` : 'Something went wrong. Try again.');
+
+/* ---------- main ---------- */
+async function init() {
+  let A, F;
+  try {
+    const [appM, authM, fsM] = await Promise.all([import(FB + 'firebase-app.js'), import(FB + 'firebase-auth.js'), import(FB + 'firebase-firestore.js')]);
+    A = authM; F = fsM;
+    const app = appM.initializeApp(firebaseConfig);
+    S.auth = A.getAuth(app);
+    S.db = F.getFirestore(app);
+  } catch (e) {
+    console.warn('Sync unavailable', e);
+    setStatus('unavailable'); return;
+  }
+  setStatus('signedout');
+
+  upload = async function () {
+    if (!S.user || !S.ref) return;
+    if (S.uploading) { await S.uploading; if (hash() === S.lastHash) return; }
+    const payload = hash(), updatedAt = Date.now();
+    setStatus(navigator.onLine ? 'syncing' : 'offline');
+    S.uploading = F.setDoc(S.ref, { payload, updatedAt, device: DEVICE })
+      .then(() => { S.lastHash = payload; S.lastSynced = Date.now(); setMeta({ uid: S.user.uid, syncedAt: updatedAt }); setStatus('synced'); })
+      .catch(e => { console.warn(e); setStatus('error', errMsg(e)); })
+      .finally(() => { S.uploading = null; });
+    return S.uploading;
+  };
+
+  // hold incoming changes only while a task row is being edited (re-rendering would drop the cursor)
+  const editing = () => !!document.activeElement?.closest?.('#taskList');
+  function applyRemote(r) {
+    if (editing()) { S.pendingRemote = r; return; }
+    let data; try { data = JSON.parse(r.payload); } catch { return; }
+    sc.applySyncData(data);
+    S.lastHash = hash();
+    S.lastSynced = Date.now();
+    setMeta({ uid: S.user.uid, syncedAt: r.updatedAt || Date.now() });
+    if (S.lastHash !== r.payload) window.__scSync.localChanged(); else setStatus('synced');
+  }
+  document.addEventListener('focusout', () => setTimeout(() => {
+    if (S.pendingRemote && !editing()) { const r = S.pendingRemote; S.pendingRemote = null; applyRemote(r); }
+  }, 400));
+
+  function listen() {
+    S.unsub?.();
+    S.unsub = F.onSnapshot(S.ref, snap => {
+      if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+      const r = snap.data();
+      if (r.device === DEVICE && r.payload === S.lastHash) return;
+      if ((r.updatedAt || 0) <= (meta().syncedAt || 0)) return;
+      applyRemote(r);
+    }, e => { console.warn(e); setStatus('error', errMsg(e)); });
+    S.ready = true;
+  }
+
+  async function startSession(user) {
+    S.ref = F.doc(S.db, 'planners', user.uid);
+    setStatus('syncing');
+    try {
+      const snap = await F.getDoc(S.ref);
+      const m = meta();
+      if (!snap.exists()) {
+        await upload();
+        toast('Signed in. Your planner is now saved to your account.');
+      } else {
+        const r = snap.data();
+        if (m.uid !== user.uid) {
+          if (r.payload === hash()) { S.lastHash = r.payload; setMeta({ uid: user.uid, syncedAt: r.updatedAt }); setStatus('synced'); }
+          else { S.conflict = r; setStatus('conflict'); open('conflict'); return; }
+        } else if ((r.updatedAt || 0) > (m.syncedAt || 0)) {
+          applyRemote(r);
+        } else {
+          S.lastHash = r.payload;
+          if (r.payload !== hash()) await upload(); else { S.lastSynced = r.updatedAt; setStatus('synced'); }
+        }
+      }
+      listen();
+    } catch (e) { console.warn(e); setStatus(navigator.onLine ? 'error' : 'offline', errMsg(e)); }
+  }
+
+  A.onAuthStateChanged(S.auth, user => {
+    S.unsub?.(); S.unsub = null; S.ready = false; S.conflict = null; S.user = user;
+    if (!user) { S.ref = null; setStatus('signedout'); return; }
+    startSession(user);
+  });
+
+  addEventListener('online', () => { if (S.user && S.ready && hash() !== S.lastHash) upload(); else if (S.user && S.status === 'offline') startSession(S.user); });
+  addEventListener('offline', () => { if (S.user) setStatus('offline'); });
+  setInterval(() => { if (S.status === 'synced') sc.refreshMenu(); }, 60000);
+
+  body.addEventListener('submit', e => { e.preventDefault(); act('sign-in'); });
+  body.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b && b.type !== 'submit') act(b.dataset.act, b); });
+
+  async function act(a, btn) {
+    if (busy) return;
+    if (a === 'use-cloud' || a === 'use-device') {
+      const r = S.conflict; S.conflict = null;
+      if (a === 'use-cloud') { applyRemote(r); toast('Loaded the planner saved in your account.'); }
+      else { S.lastHash = r.payload; await upload(); toast("Saved this device's planner to your account."); }
+      listen(); dlg.close(); return;
+    }
+    if (a === 'sync-now') { await upload(); if (S.status === 'synced') toast('Synced.'); return; }
+    if (a === 'sign-out') {
+      await A.signOut(S.auth); setMeta({}); dlg.close();
+      toast('Signed out. Your planner stays on this device.'); return;
+    }
+    const { email, password } = fieldVals();
+    formError = '';
+    if (a === 'reset') {
+      if (!email) { formError = 'Type your email first, then tap Forgot password.'; render(); return; }
+      try { await A.sendPasswordResetEmail(S.auth, email); toast(`Password reset email sent to ${email}. Check your inbox and spam folder.`); }
+      catch (err) { formError = errMsg(err); render(); }
+      return;
+    }
+    if (!email || !password) { formError = 'Type your email and password.'; render(); return; }
+    busy = true;
+    const b = btn || body.querySelector('[data-act="sign-in"]'); b?.setAttribute('aria-busy', 'true');
+    try {
+      if (a === 'create') await A.createUserWithEmailAndPassword(S.auth, email, password);
+      else await A.signInWithEmailAndPassword(S.auth, email, password);
+      if (!S.conflict) dlg.close();
+    } catch (err) {
+      formError = errMsg(err); render();
+      const f = document.getElementById('acctForm'); if (f) { f.elements.email.value = email; }
+    } finally { busy = false; b?.removeAttribute('aria-busy'); }
+  }
+}
+init();
 </script>
 </body>
 </html>
