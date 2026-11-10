@@ -2271,6 +2271,12 @@ const DEVICE = (() => {
 const meta = () => { try { return JSON.parse(localStorage.getItem(META_KEY) || '{}'); } catch { return {}; } };
 const setMeta = m => { try { localStorage.setItem(META_KEY, JSON.stringify(m)); } catch {} };
 const hash = () => JSON.stringify(sc.getSyncData());
+/* Usernames: Firebase needs an email-shaped ID, so "zekra" becomes "zekra@users.studycourt.app" internally.
+   Nothing is ever sent there; your real email is never used. (Typing a full email still works for older accounts.) */
+const USER_DOMAIN = '@users.studycourt.app';
+const USERNAME_RE = /^[a-z0-9._-]{3,20}$/;
+const toLogin = u => u.includes('@') ? u : u + USER_DOMAIN;
+const displayName = email => (email || '').endsWith(USER_DOMAIN) ? email.slice(0, -USER_DOMAIN.length) : (email || 'Signed in');
 let upload = async () => {};   // replaced once Firebase has loaded
 const ago = t => { const s = Math.round((Date.now() - t) / 1000); if (s < 45) return 'just now'; const m = Math.round(s / 60); if (m < 60) return `${m} min ago`; const h = Math.round(m / 60); return h < 24 ? `${h} h ago` : new Date(t).toLocaleDateString(); };
 
@@ -2327,37 +2333,36 @@ function render() {
   }
   if (S.user) {
     body.innerHTML = `<div class="acct"><div class="sheet-head"><h2 id="acctTitle">Account and sync</h2>${closeBtn}</div>
-      <div class="who">${esc(S.user.email || 'Signed in')}<small>${esc(statusText())}</small></div>
+      <div class="who">${esc(displayName(S.user.email))}<small>${esc(statusText())}</small></div>
       ${S.status === 'error' && S.error ? `<p class="acct-err">${esc(S.error)}</p>` : ''}
-      <p>Sign in with this email on your iPad, phone and laptop to see the same tasks, exams and notes everywhere. Custom pictures stay on each device.</p>
+      <p>Sign in with this username on your iPad, phone and laptop to see the same tasks, exams and notes everywhere. Custom pictures stay on each device.</p>
       <div class="acct-row"><button type="button" class="btn-primary" data-act="sync-now">Sync now</button><span class="spacer"></span><button type="button" class="btn-ghost danger" data-act="sign-out">Sign out</button></div></div>`;
     return;
   }
   body.innerHTML = `<form class="acct" id="acctForm" novalidate>
       <div class="sheet-head"><h2 id="acctTitle">Sync your planner</h2>${closeBtn}</div>
-      <p>Sign in on every device with the same email to see the same tasks, exams and notes. Your planner keeps working on this device without an account.</p>
-      <label class="field"><span>Email</span><input name="email" type="email" autocomplete="username" autocapitalize="off" autocorrect="off" inputmode="email" required></label>
+      <p>Sign in on every device with the same username to see the same tasks, exams and notes. No email needed. Your planner keeps working on this device without an account.</p>
+      <label class="field"><span>Username</span><input name="email" type="text" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="40" placeholder="e.g. zekra.studies" required></label>
       <label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" minlength="6" required></label>
       ${formError ? `<p class="acct-err" role="alert">${esc(formError)}</p>` : ''}
       <div class="acct-row">
         <button type="submit" class="btn-primary" data-act="sign-in">Sign in</button>
         <button type="button" class="btn-soft" data-act="create">Create account</button>
       </div>
-      <button type="button" class="link-btn" data-act="reset">Forgot password?</button>
-      <p class="hint">New here? Type your email and a password of at least 6 characters, then tap Create account.</p>
+      <p class="hint">New here? Pick a username (3–20 English letters, numbers, dots, dashes or underscores) and a password of at least 6 characters, then tap Create account. There's no password reset without an email, so let your iPad save the password when it offers, or keep it somewhere safe.</p>
     </form>`;
 }
 function fieldVals() {
   const f = document.getElementById('acctForm');
-  return { f, email: f.elements.email.value.trim(), password: f.elements.password.value };
+  return { f, email: f.elements.email.value.trim().toLowerCase(), password: f.elements.password.value };
 }
 const MSG = {
-  'auth/invalid-credential': 'Wrong email or password.',
-  'auth/wrong-password': 'Wrong email or password.',
-  'auth/user-not-found': 'No account uses this email yet. Tap Create account.',
-  'auth/invalid-email': 'That email address looks incomplete.',
+  'auth/invalid-credential': 'Wrong username or password.',
+  'auth/wrong-password': 'Wrong username or password.',
+  'auth/user-not-found': 'No account has this username yet. Tap Create account.',
+  'auth/invalid-email': 'Usernames can only use English letters, numbers, dots, dashes and underscores.',
   'auth/missing-password': 'Type your password.',
-  'auth/email-already-in-use': 'An account with this email already exists. Tap Sign in instead.',
+  'auth/email-already-in-use': 'That username is taken. If it is yours, tap Sign in; otherwise pick another.',
   'auth/weak-password': 'Use a password with at least 6 characters.',
   'auth/too-many-requests': 'Too many tries. Wait a few minutes and try again.',
   'auth/network-request-failed': 'No internet connection. Connect and try again.',
@@ -2471,15 +2476,14 @@ async function init() {
       await A.signOut(S.auth); setMeta({}); dlg.close();
       toast('Signed out. Your planner stays on this device.'); return;
     }
-    const { email, password } = fieldVals();
+    const { email: name, password } = fieldVals();
     formError = '';
-    if (a === 'reset') {
-      if (!email) { formError = 'Type your email first, then tap Forgot password.'; render(); return; }
-      try { await A.sendPasswordResetEmail(S.auth, email); toast(`Password reset email sent to ${email}. Check your inbox and spam folder.`); }
-      catch (err) { formError = errMsg(err); render(); }
-      return;
+    if (!name || !password) { formError = 'Type your username and password.'; render(); return; }
+    if (!name.includes('@') && !USERNAME_RE.test(name)) {
+      formError = 'Usernames are 3–20 characters: English letters, numbers, dots, dashes or underscores. No spaces.'; render(); return;
     }
-    if (!email || !password) { formError = 'Type your email and password.'; render(); return; }
+    if (a === 'create' && password.length < 6) { formError = 'Use a password with at least 6 characters.'; render(); return; }
+    const email = toLogin(name);
     busy = true;
     const b = btn || body.querySelector('[data-act="sign-in"]'); b?.setAttribute('aria-busy', 'true');
     try {
@@ -2488,7 +2492,7 @@ async function init() {
       if (!S.conflict) dlg.close();
     } catch (err) {
       formError = errMsg(err); render();
-      const f = document.getElementById('acctForm'); if (f) { f.elements.email.value = email; }
+      const f = document.getElementById('acctForm'); if (f) { f.elements.email.value = name; }
     } finally { busy = false; b?.removeAttribute('aria-busy'); }
   }
 }
